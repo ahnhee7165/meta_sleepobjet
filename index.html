@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SLEEP OBJET 메타 광고 리포트</title>
+<link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -178,7 +179,7 @@ tr.total td{font-weight:700;background:#F1EEE8}
 
 <script>
 const ACCOUNTS = [
-  {key:'sleepobjet', label:'SLEEP OBJET', paths:['data'], brands:[]},
+  {key:'sleepobjet', label:'SLEEP OBJET', paths:['data'], brands:[], logo:'assets/logo.png'},
 ];
 const ACCT = ACCOUNTS.find(a=>a.key===new URLSearchParams(location.search).get('acct')) || ACCOUNTS[0];
 const BRANDS = ACCT.brands;  // 광고세트 → 캠페인 이름 순서로 찾음
@@ -492,7 +493,9 @@ async function getJson(path, fallback){
 async function init(){
   const custom = new URLSearchParams(location.search).get('data');
   const paths = custom ? [custom] : ACCT.paths;
-  document.querySelector('.brand').firstChild.textContent = ACCT.label;
+  const brandEl = document.querySelector('.brand');
+  if (ACCT.logo) brandEl.innerHTML = `<img src="${ACCT.logo}" alt="${esc(ACCT.label)}" style="display:block;width:150px;height:auto;margin:4px 0 10px"><small>메타 광고 성과 리포트</small>`;
+  else brandEl.firstChild.textContent = ACCT.label;
   document.title = `${ACCT.label} 메타 광고 리포트`;
   const sa = document.getElementById('selAccount');
   if (ACCOUNTS.length < 2) sa.style.display='none';
